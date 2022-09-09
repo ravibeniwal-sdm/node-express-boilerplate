@@ -1,6 +1,8 @@
 const httpStatus = require('http-status');
 const { User } = require('../models');
 const ApiError = require('../utils/ApiError');
+const { auth } = require('./auth0.service');
+const config = require('../config/config');
 
 /**
  * Create a user
@@ -8,6 +10,20 @@ const ApiError = require('../utils/ApiError');
  * @returns {Promise<User>}
  */
 const createUser = async (userBody) => {
+  // const token = await auth.client.signup;
+  // return token;
+  // console.log('token', token);
+  auth.signup(
+    { email: userBody.email, username: 'iuierf', password: userBody.password, connection: config.auth0.connection },
+    (error, result) => {
+      console.log('error', error);
+      if (error) throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
+      console.log('data is here', result);
+      return;
+      // return User.create(userBody);
+    }
+  );
+
   if (await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }

@@ -22,7 +22,13 @@ const envVarsSchema = Joi.object()
     SMTP_PORT: Joi.number().description('port to connect to the email server'),
     SMTP_USERNAME: Joi.string().description('username for email server'),
     SMTP_PASSWORD: Joi.string().description('password for email server'),
-    EMAIL_FROM: Joi.string().description('the from field in the emails sent by the app'),
+    AUTH0_DOMAIN: Joi.string().description('Domain for the auth0 aplication'),
+    AUTH0_CLIENT_ID: Joi.string().description('Client id for the auth0 aplication'),
+    AUTH0_LOGIN_REDIRECT_URL: Joi.string().description('Redirect url for the auth0 aplication'),
+    AUTH0_REALM: Joi.string().description('Realm for the auth0 aplication'),
+    AUTH0_USER_SCOPE: Joi.string().description('User scope for the auth0 aplication'),
+    AUTH0_LOGIN_RESPONSE_TYPE: Joi.string().description('Response type for the auth0 aplication'),
+    AUTH0_LOGOUT_URL: Joi.string().description('Logout url for the auth0 aplication'),
   })
   .unknown();
 
@@ -60,5 +66,14 @@ module.exports = {
       },
     },
     from: envVars.EMAIL_FROM,
+  },
+  auth0: {
+    domain: envVars.AUTH0_DOMAIN,
+    clientID: envVars.AUTH0_CLIENT_ID,
+    loginRedirectUrl: envVars.AUTH0_LOGIN_REDIRECT_URL,
+    connection: envVars.AUTH0_REALM,
+    scope: envVars.AUTH0_USER_SCOPE,
+    responseType: envVars.AUTH0_LOGIN_RESPONSE_TYPE,
+    logoutUrl: envVars.AUTH0_LOGOUT_URL,
   },
 };
